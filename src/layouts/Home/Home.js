@@ -16,24 +16,20 @@
 
 */
 import React from "react";
-import { Route, Switch, useLocation } from "react-router-dom";
+import { Route, Switch, Redirect, useLocation } from "react-router-dom";
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
 
 // core components
-import RTLNavbar from "components/Navbars/RTLNavbar.js";
-import Footer from "components/Footer/Footer.js";
-import Sidebar from "components/Sidebar/Sidebar.js";
+import HomeNavbar from "components/Navbars/HomeNavbar.js";
 import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
 
 import routes from "routes.js";
-
-import logo from "assets/img/react-logo.png";
 import { BackgroundColorContext } from "contexts/BackgroundColorContext";
 
 var ps;
 
-function RTL(props) {
+function Home(props) {
   const location = useLocation();
   const mainPanelRef = React.useRef(null);
   const [sidebarOpened, setsidebarOpened] = React.useState(
@@ -51,18 +47,6 @@ function RTL(props) {
         ps = new PerfectScrollbar(tables[i]);
       }
     }
-    // on this page, we need on the body tag the classes .rtl and .menu-on-right
-    document.body.classList.add("rtl", "menu-on-right");
-    // we also need the rtl bootstrap
-    // so we add it dynamically to the head
-    let head = document.head;
-    let link = document.createElement("link");
-    link.type = "text/css";
-    link.rel = "stylesheet";
-    link.id = "rtl-id";
-    link.href =
-      "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rtl/3.4.0/css/bootstrap-rtl.css";
-    head.appendChild(link);
     // Specify how to clean up after this effect:
     return function cleanup() {
       if (navigator.platform.indexOf("Win") > -1) {
@@ -70,12 +54,6 @@ function RTL(props) {
         document.documentElement.classList.add("perfect-scrollbar-off");
         document.documentElement.classList.remove("perfect-scrollbar-on");
       }
-      // when we exit this page, we need to delete the classes .rtl and .menu-on-right
-      // from the body tag
-      document.body.classList.remove("rtl", "menu-on-right");
-      // we also need to delete the rtl bootstrap, so it does not break the other pages
-      // that do not make use of rtl
-      document.getElementById("rtl-id").remove();
     };
   });
   React.useEffect(() => {
@@ -98,7 +76,7 @@ function RTL(props) {
   };
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
-      if (prop.layout === "/rtl") {
+      if (prop.layout === "/admin") {
         return (
           <Route
             path={prop.layout + prop.path}
@@ -117,43 +95,30 @@ function RTL(props) {
         return routes[i].name;
       }
     }
-    return "Brand";
+    return "Weekend cup";
   };
   return (
-    <>
-      <BackgroundColorContext.Consumer>
-        {({ color, changeColor }) => (
-          <React.Fragment>
-            <div className="wrapper">
-              <Sidebar
-                routes={routes}
-                rtlActive
-                logo={{
-                  outterLink: "https://www.creative-tim.com/",
-                  text: "الإبداعية تيم",
-                  imgSrc: logo,
-                }}
+    <BackgroundColorContext.Consumer>
+      {({ color, changeColor }) => (
+        <React.Fragment>
+          <div className="wrapper">
+            <div className="main-panel" ref={mainPanelRef} data={color}>
+              <HomeNavbar
+                brandText={getBrandText(location.pathname)}
                 toggleSidebar={toggleSidebar}
+                sidebarOpened={sidebarOpened}
               />
-              <div className="main-panel" ref={mainPanelRef} data={color}>
-                <RTLNavbar
-                  brandText={getBrandText(location.pathname)}
-                  toggleSidebar={toggleSidebar}
-                  sidebarOpened={sidebarOpened}
-                />
-                <Switch>{getRoutes(routes)}</Switch>
-                {
-                  // we don't want the Footer to be rendered on map page
-                  location.pathname === "/admin/maps" ? null : <Footer fluid />
-                }
-              </div>
+              <Switch>
+                {getRoutes(routes)}
+                <Redirect from="*" to="/home" />
+              </Switch>
             </div>
-            <FixedPlugin bgColor={color} handleBgClick={changeColor} />
-          </React.Fragment>
-        )}
-      </BackgroundColorContext.Consumer>
-    </>
+          </div>
+          <FixedPlugin bgColor={color} handleBgClick={changeColor} />
+        </React.Fragment>
+      )}
+    </BackgroundColorContext.Consumer>
   );
 }
 
-export default RTL;
+export default Home;

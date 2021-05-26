@@ -18,28 +18,21 @@
 import React from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
+import "./style.css";
 
 // reactstrap components
 import {
   Collapse,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
   UncontrolledDropdown,
-  Input,
   NavbarBrand,
   Navbar,
-  NavLink,
   Nav,
   Container,
-  Modal,
   NavbarToggler,
-  ModalHeader,
 } from "reactstrap";
 
-function AdminNavbar(props) {
+function HomeNavbar(props) {
   const [collapseOpen, setcollapseOpen] = React.useState(false);
-  const [modalSearch, setmodalSearch] = React.useState(false);
   const [color, setcolor] = React.useState("navbar-transparent");
   React.useEffect(() => {
     window.addEventListener("resize", updateColor);
@@ -65,14 +58,10 @@ function AdminNavbar(props) {
     }
     setcollapseOpen(!collapseOpen);
   };
-  // this function is to open the Search modal
-  const toggleModalSearch = () => {
-    setmodalSearch(!modalSearch);
-  };
   return (
     <>
-      <Navbar className={classNames("navbar-absolute", color)} expand="lg">
-        <Container fluid>
+      <Navbar className={classNames("navbar-absolute", color)} expand="lg" >
+        <Container fluid >
           <div className="navbar-wrapper">
             <div
               className={classNames("navbar-toggle d-inline", {
@@ -96,58 +85,23 @@ function AdminNavbar(props) {
           </NavbarToggler>
           <Collapse navbar isOpen={collapseOpen}>
             <Nav className="ml-auto" navbar>
-              <UncontrolledDropdown nav>
-                <DropdownToggle
-                  caret
-                  color="default"
-                  nav
-                  onClick={(e) => e.preventDefault()}
-                >
-                  <div className="photo">
-                    <img
-                      alt="..."
-                      src={require("assets/img/anime3.png").default}
-                    />
+              <UncontrolledDropdown nav>                
+                <div className="steambutton">
+                  <span>
+                      Login With Steam
+                  </span>
+                  <div className="icon">
+                      <i className="fa fa-steam-square" />
                   </div>
-                  <b className="caret d-none d-lg-block d-xl-block" />
-                  <p className="d-lg-none">Log out</p>
-                </DropdownToggle>
-                <DropdownMenu className="dropdown-navbar" right tag="ul">
-                  <NavLink tag="li">
-                    <DropdownItem className="nav-item">Profile</DropdownItem>
-                  </NavLink>
-                  <NavLink tag="li">
-                    <DropdownItem className="nav-item">Settings</DropdownItem>
-                  </NavLink>
-                  <DropdownItem divider tag="li" />
-                  <NavLink tag="li">
-                    <DropdownItem className="nav-item">Log out</DropdownItem>
-                  </NavLink>
-                </DropdownMenu>
+                </div>
               </UncontrolledDropdown>
               <li className="separator d-lg-none" />
             </Nav>
           </Collapse>
         </Container>
       </Navbar>
-      <Modal
-        modalClassName="modal-search"
-        isOpen={modalSearch}
-        toggle={toggleModalSearch}
-      >
-        <ModalHeader>
-          <Input placeholder="SEARCH" type="text" />
-          <button
-            aria-label="Close"
-            className="close"
-            onClick={toggleModalSearch}
-          >
-            <i className="tim-icons icon-simple-remove" />
-          </button>
-        </ModalHeader>
-      </Modal>
     </>
   );
 }
 
-export default AdminNavbar;
+export default HomeNavbar;
