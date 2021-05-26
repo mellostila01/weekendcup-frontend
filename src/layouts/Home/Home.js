@@ -22,7 +22,6 @@ import PerfectScrollbar from "perfect-scrollbar";
 
 // core components
 import HomeNavbar from "components/Navbars/HomeNavbar.js";
-import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
 
 import routes from "routes.js";
 import { BackgroundColorContext } from "contexts/BackgroundColorContext";
@@ -32,9 +31,6 @@ var ps;
 function Home(props) {
   const location = useLocation();
   const mainPanelRef = React.useRef(null);
-  const [sidebarOpened, setsidebarOpened] = React.useState(
-    document.documentElement.className.indexOf("nav-open") !== -1
-  );
   React.useEffect(() => {
     if (navigator.platform.indexOf("Win") > -1) {
       document.documentElement.className += " perfect-scrollbar-on";
@@ -70,13 +66,9 @@ function Home(props) {
     }
   }, [location]);
   // this function opens and closes the sidebar on small devices
-  const toggleSidebar = () => {
-    document.documentElement.classList.toggle("nav-open");
-    setsidebarOpened(!sidebarOpened);
-  };
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
-      if (prop.layout === "/admin") {
+      if (prop.layout === "/home") {
         return (
           <Route
             path={prop.layout + prop.path}
@@ -105,16 +97,13 @@ function Home(props) {
             <div className="main-panel" ref={mainPanelRef} data={color}>
               <HomeNavbar
                 brandText={getBrandText(location.pathname)}
-                toggleSidebar={toggleSidebar}
-                sidebarOpened={sidebarOpened}
               />
-              <Switch>
-                {getRoutes(routes)}
-                <Redirect from="*" to="/home" />
-              </Switch>
+                <Switch>
+                  {getRoutes(routes)}
+                  <Redirect from="*" to="/home/main" />
+                </Switch>
             </div>
           </div>
-          <FixedPlugin bgColor={color} handleBgClick={changeColor} />
         </React.Fragment>
       )}
     </BackgroundColorContext.Consumer>

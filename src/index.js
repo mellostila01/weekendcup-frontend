@@ -21,11 +21,13 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import AdminLayout from "layouts/Admin/Admin.js";
 import HomeLayout from "layouts/Home/Home.js";
+import UserLayout from "layouts/User/User.js";
 
 import "assets/scss/black-dashboard-react.scss";
 import "assets/demo/demo.css";
 import "assets/css/nucleo-icons.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import 'font-awesome/css/font-awesome.min.css';
 
 import ThemeContextWrapper from "./components/ThemeWrapper/ThemeWrapper";
 import BackgroundColorWrapper from "./components/BackgroundColorWrapper/BackgroundColorWrapper";
@@ -37,7 +39,8 @@ ReactDOM.render(
         <Switch>
           <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
           <Route path="/home" render={(props) => <HomeLayout {...props} />} />
-          <Redirect from="/" to="/home" />
+          <Route path="/user" render={(props) => <UserLayout {...props} />} />
+          <Redirect from="/" to="/home/main" />
         </Switch>
       </BrowserRouter>
     </BackgroundColorWrapper>

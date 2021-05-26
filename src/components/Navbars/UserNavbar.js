@@ -22,17 +22,19 @@ import classNames from "classnames";
 // reactstrap components
 import {
   Collapse,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
   UncontrolledDropdown,
   NavbarBrand,
   Navbar,
+  NavLink,
   Nav,
   Container,
-  NavbarToggler
+  NavbarToggler,
 } from "reactstrap";
-import { Link, useLocation } from "react-router-dom";
 
-function HomeNavbar(props) {
-  const location = useLocation();
+function UserNavbar(props) {
   const [collapseOpen, setcollapseOpen] = React.useState(false);
   const [color, setcolor] = React.useState("navbar-transparent");
   React.useEffect(() => {
@@ -61,12 +63,23 @@ function HomeNavbar(props) {
   };
   return (
     <>
-      <Navbar className={classNames("navbar-absolute", color)} expand="lg" >
-        <Container fluid >
+      <Navbar className={classNames("navbar-absolute", color)} expand="lg">
+        <Container fluid>
           <div className="navbar-wrapper">
-              <NavbarBrand href="/home/main">
-                {props.brandText}
-              </NavbarBrand>
+            <div
+              className={classNames("navbar-toggle d-inline", {
+                toggled: props.sidebarOpened,
+              })}
+            >
+              <NavbarToggler onClick={props.toggleSidebar}>
+                <span className="navbar-toggler-bar bar1" />
+                <span className="navbar-toggler-bar bar2" />
+                <span className="navbar-toggler-bar bar3" />
+              </NavbarToggler>
+            </div>
+            <NavbarBrand href="#pablo" onClick={(e) => e.preventDefault()}>
+              {props.brandText}
+            </NavbarBrand>
           </div>
           <NavbarToggler onClick={toggleCollapse}>
             <span className="navbar-toggler-bar navbar-kebab" />
@@ -75,21 +88,27 @@ function HomeNavbar(props) {
           </NavbarToggler>
           <Collapse navbar isOpen={collapseOpen}>
             <Nav className="ml-auto" navbar>
-              <UncontrolledDropdown nav>                
-                { location.pathname!=="/home/login"?
-                  <Link to={"/home/login"}>
-                      <div className="steambutton">                    
-                        <span>
-                            Login With Steam
-                        </span>
-                        <div className="icon">
-                            <i className="myfa fa fa-steam-square" />
-                        </div>
-                      </div>
-                  </Link>
-                  :
-                  <div style={{height:"35px"}}/>
-                }
+              <UncontrolledDropdown nav>
+                <DropdownToggle
+                  caret
+                  color="default"
+                  nav
+                  onClick={(e) => e.preventDefault()}
+                >
+                  <div className="photo">
+                    <img
+                      alt="..."
+                      src={require("assets/img/anime3.png").default}
+                    />
+                  </div>
+                  <b className="caret d-none d-lg-block d-xl-block" />
+                  {/* <p className="d-lg-none">Log out</p> */}
+                </DropdownToggle>
+                <DropdownMenu className="dropdown-navbar" right tag="ul">
+                  <NavLink tag="li" to="/home">
+                    <DropdownItem className="nav-item">Log out</DropdownItem>
+                  </NavLink>
+                </DropdownMenu>
               </UncontrolledDropdown>
               <li className="separator d-lg-none" />
             </Nav>
@@ -100,4 +119,4 @@ function HomeNavbar(props) {
   );
 }
 
-export default HomeNavbar;
+export default UserNavbar;
