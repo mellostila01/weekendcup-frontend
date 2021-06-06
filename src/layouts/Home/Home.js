@@ -26,7 +26,7 @@ import HomeNavbar from "components/Navbars/HomeNavbar.js";
 import routes from "routes.js";
 import { BackgroundColorContext } from "contexts/BackgroundColorContext";
 
-var ps;
+let ps;
 
 function Home(props) {
   const location = useLocation();
@@ -91,7 +91,7 @@ function Home(props) {
   };
   return (
     <BackgroundColorContext.Consumer>
-      {({ color, changeColor }) => (
+      {({ color}) => (
         <React.Fragment>
           <div className="wrapper">
             <div className="main-panel" ref={mainPanelRef} data={color}>

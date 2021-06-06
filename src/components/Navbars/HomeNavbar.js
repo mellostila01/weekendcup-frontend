@@ -68,11 +68,13 @@ function HomeNavbar(props) {
                 {props.brandText}
               </NavbarBrand>
           </div>
-          <NavbarToggler onClick={toggleCollapse}>
-            <span className="navbar-toggler-bar navbar-kebab" />
-            <span className="navbar-toggler-bar navbar-kebab" />
-            <span className="navbar-toggler-bar navbar-kebab" />
-          </NavbarToggler>
+          { location.pathname!=="/home/login"&&
+            <NavbarToggler onClick={toggleCollapse}>
+              <span className="navbar-toggler-bar navbar-kebab" />
+              <span className="navbar-toggler-bar navbar-kebab" />
+              <span className="navbar-toggler-bar navbar-kebab" />
+            </NavbarToggler>
+          }
           <Collapse navbar isOpen={collapseOpen}>
             <Nav className="ml-auto" navbar>
               <UncontrolledDropdown nav>                

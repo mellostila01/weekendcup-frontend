@@ -18,10 +18,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import {Provider} from "react-redux";
 
 import AdminLayout from "layouts/Admin/Admin.js";
 import HomeLayout from "layouts/Home/Home.js";
 import UserLayout from "layouts/User/User.js";
+import store from "./store_config"
 
 import "assets/scss/black-dashboard-react.scss";
 import "assets/demo/demo.css";
@@ -33,17 +35,20 @@ import ThemeContextWrapper from "./components/ThemeWrapper/ThemeWrapper";
 import BackgroundColorWrapper from "./components/BackgroundColorWrapper/BackgroundColorWrapper";
 
 ReactDOM.render(
-  <ThemeContextWrapper>
-    <BackgroundColorWrapper>
-      <BrowserRouter>
-        <Switch>
-          <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
-          <Route path="/home" render={(props) => <HomeLayout {...props} />} />
-          <Route path="/user" render={(props) => <UserLayout {...props} />} />
-          <Redirect from="/" to="/home/main" />
-        </Switch>
-      </BrowserRouter>
-    </BackgroundColorWrapper>
-  </ThemeContextWrapper>,
+  <Provider store={store}>    
+    <ThemeContextWrapper>
+      <BackgroundColorWrapper>
+        <BrowserRouter>
+          <Switch>
+            <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
+            <Route path="/home" render={(props) => <HomeLayout {...props} />} />
+            <Route path="/user" render={(props) => <UserLayout {...props} />} />
+            <Redirect from="/" to="/home/main" />
+          </Switch>
+        </BrowserRouter>
+      </BackgroundColorWrapper>
+    </ThemeContextWrapper>
+  </Provider>
+  ,
   document.getElementById("root")
 );

@@ -17,7 +17,6 @@
 */
 import React from "react";
 // nodejs library that concatenates classes
-
 // reactstrap components
 import {
     Button,
@@ -31,7 +30,6 @@ import {
     ModalBody,
     ModalHeader,
     Modal,
-    ModalFooter
 } from "reactstrap";
 
 function MainPage(props) {

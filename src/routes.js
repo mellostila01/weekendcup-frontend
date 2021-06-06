@@ -19,7 +19,6 @@ import Dashboard from "views/Dashboard.js";
 import Icons from "views/Icons.js";
 import Login from "views/Home/Login";
 import MainPage from "views/Home/MainPage";
-import Map from "views/Map.js";
 import Notifications from "views/Notifications.js";
 import TableList from "views/TableList.js";
 import Typography from "views/Typography.js";
@@ -27,7 +26,7 @@ import UserProfile from "views/UserProfile.js";
 import Team from "views/User/Team";
 import TeamInfo from "views/User/TeamInfo";
 
-var routes = [
+let routes = [
   {
     path: "/main",
     name: "Home",
@@ -77,14 +76,6 @@ var routes = [
     name: "Icons",
     icon: "tim-icons icon-atom",
     component: Icons,
-    layout: "/admin",
-    show: false
-  },
-  {
-    path: "/map",
-    name: "Map",
-    icon: "tim-icons icon-pin",
-    component: Map,
     layout: "/admin",
     show: false
   },

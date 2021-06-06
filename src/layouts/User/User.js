@@ -29,7 +29,7 @@ import logo from "assets/img/react-logo.png";
 import { BackgroundColorContext } from "contexts/BackgroundColorContext";
 import UserNavbar from "components/Navbars/UserNavbar";
 
-var ps;
+let ps;
 
 function User(props) {
     const hasTeam = false;
