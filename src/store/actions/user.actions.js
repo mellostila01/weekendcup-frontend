@@ -2,6 +2,7 @@ import axios from "axios";
 
 import { userConstants } from "../constants";
 import config from "../../config";
+import LoginAuth from "../../services/LoginAuth"
 
 const API_URL = config.api.url
 
@@ -14,6 +15,8 @@ export const login = state => async dispatch => {
         }).then(response => {
             console.log("Login api:", response)
             if (response.result === "Success") {
+                
+                LoginAuth.setTokenId(response.data.token);
                 dispatch({
                     type: userConstants.LOGIN_SUCCESS,
                     payload: response.data.token,
